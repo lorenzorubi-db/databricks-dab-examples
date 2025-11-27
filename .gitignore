@@ -9,3 +9,5 @@ __pycache__
 .databricks
 build/
 dist/
+__MACOSX/
+*.egg-info/
