@@ -31,7 +31,7 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
       DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_TST }}
-      DATABRICKS_BUNDLE_ENV: tst
+      DATABRICKS_BUNDLE_ENV: dev  # should be TST, 'dev' is set for demo purposes only
     defaults:
       run:
         working-directory: .
