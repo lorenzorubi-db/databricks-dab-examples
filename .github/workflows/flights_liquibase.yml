@@ -108,8 +108,10 @@ jobs:
       
       - uses: databricks/setup-cli@main
 
-#      - run: cd flights/flights-liquibase; databricks bundle deploy --target test_automated
-#        env:
-#          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-#          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_TST }}
-#          DATABRICKS_BUNDLE_ENV: tst
+      - name: Run job (in staging)
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_TST }}
+          DATABRICKS_BUNDLE_ENV: tst
+        run: |
+          cd flights/flights-liquibase; databricks bundle deploy; databricks bundle run flights_notebook

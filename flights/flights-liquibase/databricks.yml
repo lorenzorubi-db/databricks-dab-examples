@@ -39,9 +39,9 @@ targets:
     # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
     mode: development
     default: true
-    workspace:
-      host: https://e2-demo-field-eng.cloud.databricks.com/
-      root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+#    workspace:
+#      host: https://e2-demo-field-eng.cloud.databricks.com/
+#      root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     # resource override
     ## Only create this schema in dev, for other targets manage with Terraform.
 
