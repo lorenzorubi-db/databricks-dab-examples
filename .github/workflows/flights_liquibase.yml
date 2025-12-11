@@ -18,7 +18,7 @@ on:
 
   push:
     branches:
-      - */liquibase*
+      - test/liquibase*
     paths:
       - "**/*.yml"
       - "**/*.py"
