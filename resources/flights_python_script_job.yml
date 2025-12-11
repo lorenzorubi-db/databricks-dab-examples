@@ -1,0 +1,20 @@
+# The main job for flights_project
+resources:
+  jobs:
+    flights_python_script:
+      name: flights-gen-bundle_python_script_job_${bundle.target}
+
+      tasks:
+        - task_key: python_script
+          spark_python_task:
+            python_file: ../src/flights_main_script.py
+            parameters: ["--catalog", "${var.catalog}", "--database", "${var.database}"]
+      
+          environment_key: flights
+
+      environments:
+        - environment_key: flights
+          spec:
+            client: "1"
+      
+      
