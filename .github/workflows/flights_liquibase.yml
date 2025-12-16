@@ -23,6 +23,7 @@ on:
       - "**/*.yml"
       - "**/*.py"
       - "**/*.xml"
+      - "**/*.txt"
 
 jobs:
   deploy:
