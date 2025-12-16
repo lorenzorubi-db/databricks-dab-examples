@@ -119,4 +119,4 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_TST }}
           DATABRICKS_BUNDLE_ENV: dev  # should be TST, 'dev' is set for demo purposes only
         run: |
-          databricks bundle deploy; databricks bundle run flights_notebook; databricks bundle destroy
+          databricks bundle deploy; databricks bundle run flights_notebook; databricks bundle destroy --auto-approve
