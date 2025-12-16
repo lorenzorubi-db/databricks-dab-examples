@@ -80,9 +80,9 @@ jobs:
           mv liquibase-databricks-1.4.2.jar liquibase_download/lib
 
       #----------------------------------------------
-      #   Run Liquibase connection test
+      #   Run Liquibase connection test & update
       #----------------------------------------------
-      - name: Run Liquibase connection test
+      - name: Run Liquibase connection test & update
         env:
           LIQUIBASE_COMMAND_URL: ${{ secrets.DATABRICKS_JDBC_URL }}
           LIQUIBASE_COMMAND_USERNAME: "token"
@@ -119,4 +119,4 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_TST }}
           DATABRICKS_BUNDLE_ENV: dev  # should be TST, 'dev' is set for demo purposes only
         run: |
-          databricks bundle deploy; databricks bundle run flights_notebook
+          databricks bundle deploy; databricks bundle run flights_notebook; databricks bundle destroy
