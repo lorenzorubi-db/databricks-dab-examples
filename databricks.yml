@@ -10,10 +10,14 @@ include:
   - resources/dlt/*.yml
 
 variables:
+  
+  liquibase_catalog:
+  liquibase_schema:
+  
   catalog:
-    default: main
+    default: ${var.liquibase_catalog}
   database:
-    default: ${resources.schemas.project_schema.name}
+    default: ${var.liquibase_schema}
   flights_dlt_schema:
     default: ${resources.schemas.project_schema.name}_dlt
   flights_test_schema:
@@ -51,7 +55,7 @@ targets:
     resources:
       schemas:
         project_schema:
-          name: flights
+          name: ${var.database}
           catalog_name: ${var.catalog}
           comment: "Schema for flight data"
 
