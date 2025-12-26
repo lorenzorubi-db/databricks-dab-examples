@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
     env:
-      DATABRICKS_HOST: {{ "${{ secrets.DATABRICKS_HOST }}" }}
-      DATABRICKS_TOKEN: {{ "${{ secrets.DATABRICKS_TOKEN_TST }}" }}
+      DATABRICKS_HOST: {{ "${{ vars.DATABRICKS_HOST }}" }}
+      DATABRICKS_TOKEN: {{ "${{ vars.DATABRICKS_TOKEN_TST }}" }}
       DATABRICKS_BUNDLE_ENV: dev  # should be TST, 'dev' is set for demo purposes only
     defaults:
       run:
@@ -84,11 +84,13 @@ jobs:
       #----------------------------------------------
       - name: Run Liquibase connection test & update
         env:
-          LIQUIBASE_COMMAND_URL: {{ "${{ secrets.DATABRICKS_JDBC_URL }}" }}
+          LIQUIBASE_COMMAND_URL: {{ "${{ vars.DATABRICKS_JDBC_URL }}" }}
           LIQUIBASE_COMMAND_USERNAME: "token"
           LIQUIBASE_COMMAND_PASSWORD: {{ "${{ secrets.DATABRICKS_TOKEN_TST }}" }}
+          LIQUIBASE_COMMAND_DEFAULT_CATALOG_NAME: {{ "${{ vars.LIQUIBASE_CATALOG_NAME }}" }}
+          LIQUIBASE_COMMAND_DEFAULT_SCHEMA_NAME: {{ "${{ vars.LIQUIBASE_SCHEMA_NAME }}" }}
         run: |
-          liquibase_download/liquibase update --changelog-file=./liquibase/root.changelog.xml --log-level INFO --defaultsFile=./liquibase.properties
+          liquibase_download/liquibase update --changelog-file=./liquibase/root.changelog.xml --log-level INFO
 
       #----------------------------------------------
       #   Install dependencies and package
@@ -102,7 +104,7 @@ jobs:
       #----------------------------------------------
       - name: Run unit tests
         env:
-          DATABRICKS_HOST: {{ "${{ secrets.DATABRICKS_HOST }}" }}
+          DATABRICKS_HOST: {{ "${{ vars.DATABRICKS_HOST }}" }}
           DATABRICKS_TOKEN: {{ "${{ secrets.DATABRICKS_TOKEN_TST }}" }}
           DATABRICKS_SERVERLESS_COMPUTE_ID: "auto"
         run: |
@@ -115,9 +117,11 @@ jobs:
       #----------------------------------------------
       - name: Run job (in staging)
         env:
-          DATABRICKS_HOST: {{ "${{ secrets.DATABRICKS_HOST }}" }}
+          DATABRICKS_HOST: {{ "${{ vars.DATABRICKS_HOST }}" }}
           DATABRICKS_TOKEN: {{ "${{ secrets.DATABRICKS_TOKEN_TST }}" }}
           DATABRICKS_BUNDLE_ENV: dev  # should be TST, 'dev' is set for demo purposes only
+          BUNDLE_VAR_liquibase_catalog: {{ "${{ vars.LIQUIBASE_CATALOG_NAME }}" }}
+          BUNDLE_VAR_liquibase_schema: {{ "${{ vars.LIQUIBASE_SCHEMA_NAME }}" }}
         run: |
           databricks bundle deploy; databricks bundle run flights_notebook; databricks bundle destroy --auto-approve
 {{ end }}
