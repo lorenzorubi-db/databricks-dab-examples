@@ -47,8 +47,6 @@ targets:
     # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
     mode: development
     default: true
-    workspace:
-      host: https://dbc-eae35cd0-9e95.cloud.databricks.com
 
     # RESOURCE OVERRIDE
     ## Only create this schema in dev, for other targets manage with Terraform.
