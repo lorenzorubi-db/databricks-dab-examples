@@ -11,7 +11,7 @@
         http://www.liquibase.org/xml/ns/pro
         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet id="1" author="your.name">
+    <changeSet id="1" author="lrnzrubio">
         <createTable tableName="test_table">
             <column name="test_id1" type="int">
                 <constraints primaryKey="true" nullable="false" />
@@ -20,13 +20,13 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="your.name">
+    <changeSet id="2" author="lrnzrubio">
         <createTable tableName="test_table_2">
             <column name="test_column2" type="int"/>
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="your.name">
+    <changeSet id="3" author="lrnzrubio">
         <createTable tableName="flights_raw">
             <column name="Year" type="INT"/>
             <column name="Month" type="INT"/>
