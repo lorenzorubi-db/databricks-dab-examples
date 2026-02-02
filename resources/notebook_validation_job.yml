@@ -1,0 +1,40 @@
+resources:
+  jobs:
+    notebook_validation_job:
+      name: flights-gen-bundle_validation_job_${bundle.target}
+
+      tasks:
+        - task_key: setup_task
+          notebook_task:
+            notebook_path: ../tests/integration/setup_notebook.py
+            base_parameters:
+                catalog: ${var.catalog}
+                database: ${var.flights_test_schema}
+          max_retries: 0
+          
+
+        
+        - task_key: notebook_task
+          depends_on:
+            - task_key: setup_task
+          notebook_task:
+            notebook_path: ../src/flights_main_notebook.py
+            base_parameters:
+                catalog: ${var.catalog}
+                database: ${var.flights_test_schema}
+                
+          max_retries: 0
+          
+          
+        - task_key: validation_task
+          depends_on:
+            - task_key: notebook_task
+          notebook_task:
+            notebook_path: ../tests/integration/validation_notebook.py
+            base_parameters:
+                catalog: ${var.catalog}
+                database: ${var.flights_test_schema}
+          max_retries: 0
+          
+
+      

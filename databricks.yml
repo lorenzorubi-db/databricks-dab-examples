@@ -1,34 +1,23 @@
-# This is the configuration for the Databricks Asset Bundle {{.project_name}}.
+# This is the configuration for the Databricks Asset Bundle flights-gen-bundle.
 
 bundle:
-  name: {{.project_name}}
+  name: flights-gen-bundle
 
-{{if .generate_wheels}}
-artifacts:
-  default:
-    type: whl
 
-workspace:
-  artifact_path: ${var.artifact_dir}
-
-sync:
-  exclude:
-    - src/flights
-{{end}}
 
 include:
   - resources/*.yml
   - resources/dlt/*.yml
 
 variables:
-  {{ if .include_liquibase }}
+  
   liquibase_catalog:
   liquibase_schema:
-  {{end}}
+  
   catalog:
-    default: {{ if .include_liquibase }}${var.liquibase_catalog}{{else}}{{.catalog}}{{end}}
+    default: ${var.liquibase_catalog}
   database:
-    default: {{ if .include_liquibase }}${var.liquibase_schema}{{else}}${resources.schemas.project_schema.name}{{end}}
+    default: ${var.liquibase_schema}
   flights_dlt_schema:
     default: ${resources.schemas.project_schema.name}_dlt
   flights_test_schema:
@@ -58,8 +47,6 @@ targets:
     # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
     mode: development
     default: true
-    workspace:
-      host: {{workspace_host}}
 
     # RESOURCE OVERRIDE
     ## Only create this schema in dev, for other targets manage with Terraform.
@@ -75,7 +62,6 @@ targets:
     # the same user (Service Principal) ever time.
     mode: production
     workspace:
-      host: {{workspace_host}}
       root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     run_as:
       user_name: ${workspace.current_user.userName}
@@ -101,7 +87,6 @@ targets:
   staging:
     mode: production
     workspace:
-      host: {{workspace_host}}
       root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     run_as:
       user_name: ${workspace.current_user.userName}
@@ -114,7 +99,6 @@ targets:
   prod:
     mode: production
     workspace:
-      host: {{workspace_host}}
       root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     run_as:
       # This can run as a specific user or service principal in production.

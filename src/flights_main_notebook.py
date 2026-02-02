@@ -1,18 +1,7 @@
 # Databricks notebook source
 dbutils.widgets.text("catalog", "main")
 dbutils.widgets.text("database", "flights_dev")
-{{if .generate_wheels}}
-dbutils.widgets.text("artifact_dir", "dist")
 
-# COMMAND ----------
-
-artifact_dir = dbutils.widgets.get("artifact_dir")
-
-# COMMAND ----------
-
-# MAGIC %pip install $artifact_dir/.internal/flights-0.0.1-py3-none-any.whl
-# MAGIC dbutils.library.restartPython()
-{{end}}
 
 # COMMAND ----------
 
